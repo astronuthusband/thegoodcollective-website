@@ -1,6 +1,6 @@
 /* ============================================================
    THE GOOD COLLECTIVE — script.js
-   Premium Interactions & Animations
+   Premium Interactions & Netlify Forms FIXED (JS version)
    ============================================================ */
 
 (function () {
@@ -49,22 +49,19 @@
   }
 
   /* ----------------------------------------------------------
-     2. NAVBAR — Transparent → Blurred on scroll
+     2. NAVBAR
   ---------------------------------------------------------- */
   const navbar = document.getElementById('navbar');
 
   function handleNavbar() {
-    if (window.scrollY > 60) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
+    if (window.scrollY > 60) navbar.classList.add('scrolled');
+    else navbar.classList.remove('scrolled');
   }
   window.addEventListener('scroll', handleNavbar, { passive: true });
   handleNavbar();
 
   /* ----------------------------------------------------------
-     3. HAMBURGER MOBILE MENU
+     3. MOBILE MENU
   ---------------------------------------------------------- */
   const hamburger = document.getElementById('hamburger');
   const navLinks  = document.getElementById('navLinks');
@@ -86,15 +83,22 @@
   }
 
   /* ----------------------------------------------------------
-     4. SMOOTH SCROLLING
+     4. SMOOTH SCROLL
   ---------------------------------------------------------- */
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       const target = document.querySelector(this.getAttribute('href'));
       if (!target) return;
+
       e.preventDefault();
       const navH = navbar ? navbar.offsetHeight : 0;
-      const targetY = target.getBoundingClientRect().top + window.pageYOffset - navH - 16;
+
+      const targetY =
+        target.getBoundingClientRect().top +
+        window.pageYOffset -
+        navH -
+        16;
+
       window.scrollTo({ top: targetY, behavior: 'smooth' });
     });
   });
@@ -107,149 +111,88 @@
   );
 
   if ('IntersectionObserver' in window) {
-    const revealObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
-    );
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
 
-    revealEls.forEach(el => revealObserver.observe(el));
+    revealEls.forEach(el => observer.observe(el));
   } else {
     revealEls.forEach(el => el.classList.add('visible'));
   }
 
   /* ----------------------------------------------------------
-     6–14 (UNCHANGED)
+     6. STAGGER
   ---------------------------------------------------------- */
-  // (Everything above remains exactly as you already had it)
-  // ---------------------------------------------------------
-
-  /* ----------------------------------------------------------
-     10. CONTACT FORM — FIXED NETLIFY VERSION
-  ---------------------------------------------------------- */
-
-  const contactForm = document.getElementById('contactForm');
-
-  if (contactForm) {
-    contactForm.addEventListener('submit', async function (e) {
-      e.preventDefault();
-
-      const btn  = this.querySelector('.form-btn');
-      const span = btn?.querySelector('span');
-      const svg  = btn?.querySelector('svg');
-
-      if (!btn) return;
-
-      // UI loading state
-      btn.disabled = true;
-      btn.style.opacity = '0.8';
-      if (span) span.textContent = 'Sending…';
-
-      const formData = new FormData(contactForm);
-
-      try {
-        // REAL Netlify submission
-        await fetch('/', {
-          method: 'POST',
-          body: formData
-        });
-
-        // success UI
-        if (span) span.textContent = 'Message Sent ✓';
-        if (svg) svg.style.display = 'none';
-        btn.style.background = '#4a7c5a';
-
-        setTimeout(() => {
-          contactForm.reset();
-
-          if (span) span.textContent = 'Start Your Project';
-          if (svg) svg.style.display = '';
-          btn.disabled = false;
-          btn.style.opacity = '';
-          btn.style.background = '';
-        }, 2000);
-
-      } catch (err) {
-        console.error('Form error:', err);
-
-        if (span) span.textContent = 'Try Again';
-        btn.disabled = false;
-        btn.style.opacity = '';
-      }
-    });
-
-    const inputs = contactForm.querySelectorAll('input, textarea');
-    inputs.forEach(input => {
-      input.addEventListener('focus', () => {
-        input.parentElement.style.transform = 'scale(1.01)';
-      });
-      input.addEventListener('blur', () => {
-        input.parentElement.style.transform = '';
-      });
-    });
-  }
-
-  /* ----------------------------------------------------------
-     11–15 (UNCHANGED)
-  ---------------------------------------------------------- */
-
-  function applyStaggeredDelay() {
+  function applyStagger() {
     const cards = document.querySelectorAll('.service-card, .why-card');
     cards.forEach((card, i) => {
-      const existing = Array.from(card.classList)
-        .find(c => c.startsWith('delay-'));
-      if (!existing) {
+      if (!card.style.transitionDelay) {
         card.style.transitionDelay = (i * 0.08) + 's';
       }
     });
   }
-  applyStaggeredDelay();
+  applyStagger();
 
-  const marqueeTrack = document.querySelector('.marquee-track');
-  if (marqueeTrack) {
-    marqueeTrack.addEventListener('mouseenter', () => {
-      marqueeTrack.style.animationPlayState = 'paused';
+  /* ----------------------------------------------------------
+     7. MARQUEE PAUSE
+  ---------------------------------------------------------- */
+  const marquee = document.querySelector('.marquee-track');
+  if (marquee) {
+    marquee.addEventListener('mouseenter', () => {
+      marquee.style.animationPlayState = 'paused';
     });
-    marqueeTrack.addEventListener('mouseleave', () => {
-      marqueeTrack.style.animationPlayState = 'running';
+    marquee.addEventListener('mouseleave', () => {
+      marquee.style.animationPlayState = 'running';
     });
   }
 
-  const sections   = document.querySelectorAll('section[id]');
+  /* ----------------------------------------------------------
+     8. ACTIVE NAV
+  ---------------------------------------------------------- */
+  const sections = document.querySelectorAll('section[id]');
   const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
 
-  function updateActiveNav() {
-    const scrollPos = window.scrollY + (navbar?.offsetHeight || 80) + 40;
+  function updateNav() {
+    const pos = window.scrollY + (navbar?.offsetHeight || 80) + 40;
+
     sections.forEach(sec => {
-      const top    = sec.offsetTop;
+      const top = sec.offsetTop;
       const bottom = top + sec.offsetHeight;
-      if (scrollPos >= top && scrollPos < bottom) {
+
+      if (pos >= top && pos < bottom) {
         navAnchors.forEach(a => a.classList.remove('active'));
-        const match = document.querySelector(`.nav-links a[href="#${sec.id}"]`);
+        const match = document.querySelector(
+          `.nav-links a[href="#${sec.id}"]`
+        );
         if (match) match.classList.add('active');
       }
     });
   }
-  window.addEventListener('scroll', updateActiveNav, { passive: true });
+  window.addEventListener('scroll', updateNav, { passive: true });
 
+  /* ----------------------------------------------------------
+     9. BUTTON RIPPLE
+  ---------------------------------------------------------- */
   document.querySelectorAll('.btn').forEach(btn => {
     btn.addEventListener('click', function (e) {
-      const rect   = this.getBoundingClientRect();
+      const rect = this.getBoundingClientRect();
       const ripple = document.createElement('span');
-      const size   = Math.max(rect.width, rect.height) * 2;
-      const x      = e.clientX - rect.left - size / 2;
-      const y      = e.clientY - rect.top  - size / 2;
+      const size = Math.max(rect.width, rect.height) * 2;
+
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
 
       ripple.style.cssText = `
         position:absolute;
-        width:${size}px; height:${size}px;
-        left:${x}px; top:${y}px;
+        width:${size}px;
+        height:${size}px;
+        left:${x}px;
+        top:${y}px;
         background:rgba(255,255,255,0.15);
         border-radius:50%;
         transform:scale(0);
@@ -271,15 +214,72 @@
   `;
   document.head.appendChild(style);
 
+  /* ----------------------------------------------------------
+     10. CONTACT FORM (FIXED NETLIFY + JS)
+  ---------------------------------------------------------- */
+
+  const form = document.getElementById('contactForm');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const btn = form.querySelector('.form-btn');
+      const text = btn?.querySelector('span');
+
+      if (btn) {
+        btn.disabled = true;
+        btn.style.opacity = '0.7';
+        if (text) text.textContent = 'Sending...';
+      }
+
+      const formData = new FormData(form);
+
+      // IMPORTANT FIX: proper Netlify encoding
+      const encoded = new URLSearchParams(formData).toString();
+
+      try {
+        await fetch('/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: encoded
+        });
+
+        if (text) text.textContent = 'Message Sent ✓';
+
+        setTimeout(() => {
+          form.reset();
+          if (text) text.textContent = 'Send Message';
+          if (btn) {
+            btn.disabled = false;
+            btn.style.opacity = '';
+          }
+        }, 2000);
+
+      } catch (err) {
+        console.error('Form error:', err);
+
+        if (text) text.textContent = 'Try Again';
+        if (btn) {
+          btn.disabled = false;
+          btn.style.opacity = '';
+        }
+      }
+    });
+  }
+
+  /* ----------------------------------------------------------
+     11. LOAD ANIMATION
+  ---------------------------------------------------------- */
   window.addEventListener('load', () => {
     document.body.classList.add('loaded');
 
-    const heroRevealEls = document.querySelectorAll('.hero .reveal-up');
-    heroRevealEls.forEach((el, i) => {
-      setTimeout(() => {
-        el.classList.add('visible');
-      }, 200 + i * 140);
-    });
+    document.querySelectorAll('.hero .reveal-up')
+      .forEach((el, i) => {
+        setTimeout(() => el.classList.add('visible'), 200 + i * 140);
+      });
   });
 
   console.log('%c The Good Collective ', 'background:#304b3a;color:#c9a96e;font-family:serif;font-size:18px;padding:8px 16px;border:1px solid #c9a96e;');
