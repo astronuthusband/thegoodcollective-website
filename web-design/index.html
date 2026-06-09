@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Good Collective — Website Design for Malaysian Businesses</title>
+  <meta name="description" content="We design high-converting websites for Malaysian businesses. Modern, fast, and built to grow your brand." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="image/TGC_LOGO_FAVICON.png">
+  
+  <style>
+    /* ── Reset & Base ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #375643;
+      --bg-deep:  #2c4537;
+      --bg-card:  #2f4b3c;
+      --text:     #f5efe6;
+      --text-muted: rgba(245,239,230,0.6);
+      --gold:     #c8a86e;
+      --gold-light: #dfc08a;
+      --white:    #ffffff;
+      --wa-green: #25D366;
+
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+
+      --radius: 4px;
+      --radius-lg: 10px;
+      --transition: 0.22s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Typography ───────────────────────────────── */
+    .eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-display);
+      line-height: 1.15;
+    }
+
+    h1 { font-size: clamp(2.4rem, 6vw, 4.2rem); font-weight: 900; }
+    h2 { font-size: clamp(1.9rem, 4vw, 3rem); font-weight: 700; }
+    h3 { font-size: clamp(1.15rem, 2.5vw, 1.45rem); font-weight: 700; }
+
+    p { color: rgba(245,239,230,0.82); }
+
+    .gold { color: var(--gold); }
+    .italic { font-style: italic; }
+
+    .underline-gold {
+      position: relative;
+      display: inline-block;
+    }
+    .underline-gold::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: 2px;
+      width: 100%; height: 3px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    /* ── Layout ───────────────────────────────────── */
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    section { padding: 5rem 0; }
+
+    .section-header {
+      margin-bottom: 3rem;
+    }
+    .section-header .eyebrow { margin-bottom: 0.6rem; }
+    .section-header h2 { margin-bottom: 1rem; }
+    .section-header p { max-width: 540px; font-size: 1.05rem; }
+
+    /* ── Buttons ──────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 1.8rem;
+      border-radius: var(--radius);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      border: none;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+      white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-wa {
+      background: var(--wa-green);
+      color: #fff;
+      box-shadow: 0 4px 18px rgba(37,211,102,0.25);
+    }
+    .btn-wa:hover {
+      background: #1ebe5a;
+      box-shadow: 0 8px 28px rgba(37,211,102,0.35);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1.5px solid rgba(245,239,230,0.3);
+    }
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .btn-lg {
+      padding: 1rem 2.2rem;
+      font-size: 1rem;
+    }
+
+    .wa-icon {
+      width: 20px; height: 20px;
+      flex-shrink: 0;
+    }
+
+    /* ── Navbar ───────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.1rem 0;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(43,66,51,0.97);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.25);
+      backdrop-filter: blur(8px);
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--text);
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-cta { display: none; }
+    @media (min-width: 640px) {
+      .nav-cta { display: inline-flex; }
+    }
+
+    /* ── Hero ─────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      padding: 7rem 0 4rem;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 80% 20%, rgba(200,168,110,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 70% at 10% 80%, rgba(37,211,102,0.04) 0%, transparent 50%);
+    }
+
+    /* subtle dot grid */
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(245,239,230,0.07) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+    }
+
+    .hero .container { position: relative; z-index: 1; }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.6rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px; height: 1.5px;
+      background: var(--gold);
+    }
+
+    .hero h1 {
+      margin-bottom: 1.4rem;
+      max-width: 720px;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      max-width: 500px;
+      margin-bottom: 2.4rem;
+      line-height: 1.65;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      align-items: center;
+    }
+
+    .hero-trust {
+      margin-top: 4rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .hero-trust-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+    .trust-badges {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .trust-badge {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--gold);
+      border: 1px solid rgba(200,168,110,0.3);
+      border-radius: 20px;
+      padding: 0.25rem 0.75rem;
+    }
+
+    /* ── Problem ──────────────────────────────────── */
+    .problem {
+      background: var(--bg-deep);
+      border-top: 1px solid rgba(245,239,230,0.06);
+      border-bottom: 1px solid rgba(245,239,230,0.06);
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    @media (min-width: 640px) {
+      .problem-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (min-width: 900px) {
+      .problem-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .problem-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(245,239,230,0.07);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem;
+    }
+    .problem-card .icon {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      line-height: 1;
+    }
+    .problem-card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .problem-card p {
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+
+    /* ── Services ─────────────────────────────────── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+    @media (min-width: 640px) {
+      .services-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (min-width: 900px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .service-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(245,239,230,0.08);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .service-card:hover {
+      border-color: rgba(200,168,110,0.35);
+      transform: translateY(-3px);
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .service-card:hover::before { opacity: 1; }
+
+    .service-number {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 900;
+      color: rgba(200,168,110,0.15);
+      line-height: 1;
+      margin-bottom: 0.8rem;
+    }
+    .service-card h3 { margin-bottom: 0.6rem; }
+    .service-card p { font-size: 0.9rem; }
+
+    /* ── Portfolio ────────────────────────────────── */
+    .portfolio { background: var(--bg-deep); }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+    @media (min-width: 640px) {
+      .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto auto;
+      }
+      .portfolio-item:first-child {
+        grid-column: span 2;
+      }
+    }
+    @media (min-width: 900px) {
+      .portfolio-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .portfolio-item:first-child {
+        grid-column: span 2;
+        grid-row: span 1;
+      }
+    }
+
+    .portfolio-item {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .portfolio-thumb {
+      width: 100%;
+      aspect-ratio: 16/10;
+      background: var(--bg-card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border: 1px solid rgba(245,239,230,0.08);
+      transition: border-color var(--transition);
+    }
+    .portfolio-item:first-child .portfolio-thumb { aspect-ratio: 16/8; }
+
+    .portfolio-item:hover .portfolio-thumb {
+      border-color: rgba(200,168,110,0.3);
+    }
+
+    /* unique placeholder gradients per card */
+    .portfolio-item:nth-child(1) .portfolio-thumb { background: linear-gradient(135deg, #2f4b3c, #254035); }
+    .portfolio-item:nth-child(2) .portfolio-thumb { background: linear-gradient(135deg, #2d4539, #3a5044); }
+    .portfolio-item:nth-child(3) .portfolio-thumb { background: linear-gradient(135deg, #253d31, #314840); }
+    .portfolio-item:nth-child(4) .portfolio-thumb { background: linear-gradient(135deg, #2a4237, #38524a); }
+    .portfolio-item:nth-child(5) .portfolio-thumb { background: linear-gradient(135deg, #2c4036, #243a30); }
+
+    .portfolio-placeholder-icon {
+      font-size: 2rem;
+      opacity: 0.35;
+    }
+    .portfolio-placeholder-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .portfolio-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(37,55,45,0.95) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity var(--transition);
+      display: flex;
+      align-items: flex-end;
+      padding: 1.4rem;
+    }
+    .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+
+    .portfolio-info { }
+    .portfolio-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.2rem;
+    }
+    .portfolio-title {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* ── Why Us ───────────────────────────────────── */
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media (min-width: 640px) {
+      .why-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (min-width: 900px) {
+      .why-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .why-card {
+      padding: 1.8rem 1.5rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(245,239,230,0.07);
+      background: var(--bg-card);
+      transition: border-color var(--transition);
+    }
+    .why-card:hover { border-color: rgba(200,168,110,0.25); }
+
+    .why-icon {
+      width: 44px; height: 44px;
+      border-radius: 8px;
+      background: rgba(200,168,110,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 1.1rem;
+    }
+    .why-card h3 { font-size: 1rem; margin-bottom: 0.45rem; }
+    .why-card p { font-size: 0.88rem; line-height: 1.6; }
+
+    /* ── Stats strip ──────────────────────────────── */
+    .stats {
+      background: var(--gold);
+      padding: 3rem 0;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      text-align: center;
+    }
+    @media (min-width: 640px) {
+      .stats-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-weight: 900;
+      color: var(--bg);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: rgba(43,66,51,0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── Final CTA ────────────────────────────────── */
+    .final-cta {
+      background: var(--bg-deep);
+      border-top: 1px solid rgba(245,239,230,0.06);
+      text-align: center;
+      padding: 6rem 0;
+    }
+    .final-cta h2 {
+      max-width: 640px;
+      margin: 0 auto 1.2rem;
+    }
+    .final-cta p {
+      max-width: 460px;
+      margin: 0 auto 2.4rem;
+      font-size: 1.05rem;
+    }
+    .final-cta .eyebrow { margin-bottom: 1rem; }
+
+    /* ── Footer ───────────────────────────────────── */
+    footer {
+      padding: 2rem 0;
+      border-top: 1px solid rgba(245,239,230,0.08);
+    }
+    footer .container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: center;
+      text-align: center;
+    }
+    @media (min-width: 640px) {
+      footer .container {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+      }
+    }
+    footer p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    footer a { color: var(--gold); }
+
+    /* ── Sticky WhatsApp ──────────────────────────── */
+    .wa-sticky {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 200;
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      background: var(--wa-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .wa-sticky:hover {
+      transform: scale(1.08) translateY(-2px);
+      box-shadow: 0 8px 30px rgba(37,211,102,0.45);
+    }
+    .wa-sticky svg { width: 28px; height: 28px; }
+
+    /* pulse ring */
+    .wa-sticky::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 2px solid var(--wa-green);
+      opacity: 0;
+      animation: pulse-ring 2.5s ease-out infinite;
+    }
+    @keyframes pulse-ring {
+      0%   { transform: scale(1); opacity: 0.6; }
+      80%  { transform: scale(1.5); opacity: 0; }
+      100% { opacity: 0; }
+    }
+
+    /* ── Divider line ─────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(200,168,110,0.2), transparent);
+      margin: 0 auto;
+      max-width: 600px;
+    }
+
+    /* ── Utilities ────────────────────────────────── */
+    .text-center { text-align: center; }
+    .text-center .section-header p { margin-left: auto; margin-right: auto; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════ NAV ════════════════ -->
+<nav id="navbar">
+  <div class="container">
+    <span class="logo-text">The Good Collective</span>
+    <a href="https://wa.me/60105284237?text=Hi%2C%20I%27m%20interested%20in%20your%20web%20design%20services." target="_blank" rel="noopener" class="btn btn-wa nav-cta">
+      <svg class="wa-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Chat with Us
+    </a>
+  </div>
+</nav>
+
+<!-- ════════════════ HERO ════════════════ -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="container">
+    <div class="hero-eyebrow eyebrow">Website Design · Malaysia</div>
+
+    <h1>Your website should<br>
+      <em class="italic gold">win customers</em>,<br>
+      not just <span class="underline-gold">exist</span>.
+    </h1>
+
+    <p class="hero-sub">
+      We design fast, modern websites that turn visitors into paying customers — built specifically for Malaysian businesses ready to grow.
+    </p>
+
+    <div class="hero-cta-group">
+      <a href="https://wa.me/60105284237?text=Hi%2C%20I%27m%20interested%20in%20your%20web%20design%20services." target="_blank" rel="noopener" class="btn btn-wa btn-lg">
+        <svg class="wa-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Get a Free Consultation
+      </a>
+      <a href="#services" class="btn btn-outline">See Our Work</a>
+    </div>
+
+    <div class="hero-trust">
+      <span class="hero-trust-label">Trusted for</span>
+      <div class="trust-badges">
+        <span class="trust-badge">F&B</span>
+        <span class="trust-badge">Retail</span>
+        <span class="trust-badge">Professional Services</span>
+        <span class="trust-badge">E-commerce</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ STATS STRIP ════════════════ -->
+<div class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div>
+        <div class="stat-number">15+</div>
+        <div class="stat-label">Projects Delivered</div>
+      </div>
+      <div>
+        <div class="stat-number">5★</div>
+        <div class="stat-label">Client Satisfaction</div>
+      </div>
+      <div>
+        <div class="stat-number">7</div>
+        <div class="stat-label">Days Average Turnaround</div>
+      </div>
+      <div>
+        <div class="stat-number">3×</div>
+        <div class="stat-label">More Leads on Average</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ PROBLEM ════════════════ -->
+<section class="problem" id="why">
+  <div class="container">
+    <div class="section-header">
+      <div class="eyebrow">The Real Cost of a Bad Website</div>
+      <h2>Customers judge your business in <span class="gold">3 seconds</span></h2>
+      <p>If your website doesn't inspire confidence immediately, they're gone — and they won't come back.</p>
+    </div>
+
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="icon">📉</div>
+        <h3>Outdated design loses trust</h3>
+        <p>75% of visitors judge your credibility based on your website's design alone. An outdated look signals that your business isn't serious.</p>
+      </div>
+      <div class="problem-card">
+        <div class="icon">📱</div>
+        <h3>Poor mobile experience kills conversions</h3>
+        <p>Over 70% of Malaysian web traffic is mobile. A site that breaks on a phone means lost leads every single day.</p>
+      </div>
+      <div class="problem-card">
+        <div class="icon">⏳</div>
+        <h3>Slow speed drives visitors away</h3>
+        <p>A 1-second delay in load time reduces conversions by 7%. Every second costs you real money.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ SERVICES ════════════════ -->
+<section id="services">
+  <div class="container">
+    <div class="section-header">
+      <div class="eyebrow">What We Build</div>
+      <h2>Design that does the <em class="italic gold">heavy lifting</em></h2>
+      <p>Every service is focused on one outcome: turning your website into your best-performing sales asset.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-number">01</div>
+        <h3>Website Design & Development</h3>
+        <p>Full custom websites designed to reflect your brand and convert visitors. Clean code, fast performance, and built to last.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-number">02</div>
+        <h3>Mobile-Responsive Design</h3>
+        <p>Every layout is built mobile-first — pixel-perfect on any screen, from a 5-inch phone to a 27-inch monitor.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-number">03</div>
+        <h3>Landing Pages for Ads</h3>
+        <p>High-converting pages built specifically for Google and Meta ad campaigns — designed to maximize your ROI, not just look good.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-number">04</div>
+        <h3>Speed Optimization</h3>
+        <p>We audit and rebuild underperforming sites to load faster, rank better on Google, and keep users engaged longer.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ PORTFOLIO ════════════════ -->
+<section class="portfolio" id="portfolio">
+  <div class="container">
+    <div class="section-header">
+      <div class="eyebrow">Selected Work</div>
+      <h2>Built for results, <em class="italic gold">not just looks</em></h2>
+      <p>Each project is crafted around the business goal, not a template. Here's a sample of what we've built.</p>
+    </div>
+
+    <div class="portfolio-grid">
+      <div class="portfolio-item">
+        <div class="portfolio-thumb">
+          <img src="/image/websites/coldreach-ai web.png" alt="Project name" style="width:100%; height:100%; object-fit:cover;" />
+        </div>
+        <div class="portfolio-overlay">
+          <div class="portfolio-info">
+            <div class="portfolio-tag">AI Service · KL</div>
+            <div class="portfolio-title">ColdReach AI</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-item">
+        <div class="portfolio-thumb">
+         <img src="/image/websites/replylah web.png" alt="Project name" style="width:100%; height:100%; object-fit:cover;" />
+        </div>
+        <div class="portfolio-overlay">
+          <div class="portfolio-info">
+            <div class="portfolio-tag">AI Service · KL</div>
+            <div class="portfolio-title">ReplyLah</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-item">
+        <div class="portfolio-thumb">
+          <img src="/image/websites/typist web.png" alt="Project name" style="width:100%; height:100%; object-fit:cover;" />
+        </div>
+        <div class="portfolio-overlay">
+          <div class="portfolio-info">
+            <div class="portfolio-tag">Browser Game · KL</div>
+            <div class="portfolio-title">Typist - typing game</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-item">
+        <div class="portfolio-thumb">
+          <img src="/image/websites/QAS WEB.png" alt="Project name" style="width:100%; height:100%; object-fit:cover;" />
+        </div>
+        <div class="portfolio-overlay">
+          <div class="portfolio-info">
+            <div class="portfolio-tag">Cosmetic Brand · E-commerce · Selangor</div>
+            <div class="portfolio-title">Qasmetics by NQs</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-item">
+        <div class="portfolio-thumb">
+          <img src="/image/websites/artech-global.png" alt="Project name" style="width:100%; height:100%; object-fit:cover;" />
+        </div>
+        <div class="portfolio-overlay">
+          <div class="portfolio-info">
+            <div class="portfolio-tag">Corporate · KL</div>
+            <div class="portfolio-title">Artech Global Solution</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ WHY US ════════════════ -->
+<section id="about">
+  <div class="container">
+    <div class="section-header text-center">
+      <div class="eyebrow">Why The Good Collective</div>
+      <h2>A partner in your <em class="italic gold">growth</em>, not just a vendor</h2>
+      <p>We're not a template shop. Every project is built with intention — because your website is your most visible business asset.</p>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">🎯</div>
+        <h3>Conversion-First Design</h3>
+        <p>Every layout decision is made with one question: will this help convert visitors into customers?</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">⚡</div>
+        <h3>Fast Turnaround</h3>
+        <p>Most projects go live within 14 days. No endless back-and-forth. No waiting months to see results.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🇲🇾</div>
+        <h3>Built for Malaysia</h3>
+        <p>We understand the local market — Bahasa, culture, consumer behaviour. Your site will speak to your real audience.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">✦</div>
+        <h3>Premium Without the Price</h3>
+        <p>Agency-quality design at SME-friendly rates. You get a polished, professional website without a bloated agency invoice.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ FINAL CTA ════════════════ -->
+<section class="final-cta">
+  <div class="container">
+    <div class="eyebrow">Ready to Grow?</div>
+    <h2>Your next customer is already <em class="italic gold">searching for you</em></h2>
+    <p>Let's build a website that makes sure they find you — and choose you. Drop us a message on WhatsApp, and we'll respond within the hour.</p>
+    <a href="https://wa.me/60105284237?text=Hi%2C%20I%27m%20interested%20in%20a%20new%20website%20for%20my%20business." target="_blank" rel="noopener" class="btn btn-wa btn-lg">
+      <svg class="wa-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Start Your Project on WhatsApp
+    </a>
+    <p style="margin-top:1rem; font-size:0.82rem; color: var(--text-muted);">Free consultation · No commitment · Response within 1 hour</p>
+  </div>
+</section>
+
+<!-- ════════════════ FOOTER ════════════════ -->
+<footer>
+  <div class="container">
+    <p>© 2025 The Good Collective. All rights reserved.</p>
+    <p>Made with care in <span style="color:var(--gold)">Malaysia 🇲🇾</span> · <a href="https://wa.me/60105284237" target="_blank" rel="noopener">WhatsApp Us</a></p>
+  </div>
+</footer>
+
+<!-- ════════════════ STICKY WA BUTTON ════════════════ -->
+<a href="https://wa.me/60105284237?text=Hi%2C%20I%27d%20like%20to%20enquire%20about%20your%20website%20design%20services." target="_blank" rel="noopener" class="wa-sticky" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<!-- ════════════════ JS ════════════════ -->
+<script>
+  // Sticky nav on scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+</script>
+</body>
+</html>
